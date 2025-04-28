@@ -1,3 +1,4 @@
+
 import MainLayout from "@/components/layout/MainLayout";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -7,21 +8,17 @@ import { Wrench, ClipboardList, UserRound, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AddRoomDialog } from "@/components/property/AddRoomDialog";
 
+type RoomType = 'Standard' | 'Deluxe' | 'Suite' | 'Penthouse';
+type RoomStatus = 'vacant' | 'occupied' | 'maintenance' | 'cleaning';
+
 interface Room {
   id: string;
   number: string;
-  type: 'Standard' | 'Deluxe' | 'Suite' | 'Penthouse';
-  status: 'vacant' | 'occupied' | 'maintenance' | 'cleaning';
+  type: RoomType;
+  status: RoomStatus;
   guest?: string;
   checkOut?: string;
 }
-
-const rooms: Room[] = [
-  { id: '101', number: '101', type: 'Standard', status: 'vacant' },
-  { id: '102', number: '102', type: 'Deluxe', status: 'occupied', guest: 'John Smith', checkOut: '2025-04-30' },
-  { id: '103', number: '103', type: 'Suite', status: 'maintenance' },
-  { id: '104', number: '104', type: 'Standard', status: 'cleaning' },
-];
 
 const statusColors = {
   vacant: 'bg-green-100 text-green-800 border-green-200',
@@ -50,7 +47,7 @@ export default function Property() {
     ? rooms 
     : rooms.filter(room => room.type === selectedType);
 
-  const handleAddRoom = (newRoom: { number: string; type: string; status: 'vacant' | 'occupied' | 'maintenance' | 'cleaning' }) => {
+  const handleAddRoom = (newRoom: { number: string; type: RoomType; status: RoomStatus }) => {
     const room: Room = {
       id: String(Date.now()),
       ...newRoom

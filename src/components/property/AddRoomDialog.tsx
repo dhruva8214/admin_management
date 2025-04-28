@@ -17,19 +17,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+// Define proper room type values
+type RoomType = 'Standard' | 'Deluxe' | 'Suite' | 'Penthouse';
+
 interface AddRoomDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onAddRoom: (room: {
     number: string;
-    type: string;
+    type: RoomType;
     status: 'vacant' | 'occupied' | 'maintenance' | 'cleaning';
   }) => void;
 }
 
 export function AddRoomDialog({ open, onOpenChange, onAddRoom }: AddRoomDialogProps) {
   const [roomNumber, setRoomNumber] = useState('');
-  const [roomType, setRoomType] = useState('Standard');
+  const [roomType, setRoomType] = useState<RoomType>('Standard');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,7 +69,7 @@ export function AddRoomDialog({ open, onOpenChange, onAddRoom }: AddRoomDialogPr
             <label htmlFor="roomType" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Room Type
             </label>
-            <Select value={roomType} onValueChange={setRoomType}>
+            <Select value={roomType} onValueChange={(value: RoomType) => setRoomType(value)}>
               <SelectTrigger>
                 <SelectValue placeholder="Select room type" />
               </SelectTrigger>
