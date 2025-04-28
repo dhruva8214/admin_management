@@ -1,4 +1,3 @@
-
 import { 
   BarChart, 
   Bar, 
@@ -73,7 +72,8 @@ export default function OccupancyChart() {
             <Bar 
               dataKey="occupancy" 
               radius={[4, 4, 0, 0]} 
-              fill={(entry) => entry._future ? '#93c5fd' : '#2563eb'} 
+              fill="#2563eb"
+              className="fill-primary"
             />
           </BarChart>
         </ResponsiveContainer>
