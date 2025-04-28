@@ -1,5 +1,5 @@
 
-import { Check, UserRound, ClipboardList, Tool, Clock } from "lucide-react";
+import { Check, UserRound, ClipboardList, Wrench, Clock } from "lucide-react";
 import { 
   Card, 
   CardContent, 
@@ -74,7 +74,7 @@ const tasks: Task[] = [
 
 const departmentIcons = {
   housekeeping: ClipboardList,
-  maintenance: Tool,
+  maintenance: Wrench,
   frontdesk: UserRound,
 };
 
