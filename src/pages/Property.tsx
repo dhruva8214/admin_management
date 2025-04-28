@@ -1,11 +1,11 @@
-
 import MainLayout from "@/components/layout/MainLayout";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Wrench, ClipboardList, UserRound } from "lucide-react";
+import { Wrench, ClipboardList, UserRound, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { AddRoomDialog } from "@/components/property/AddRoomDialog";
 
 interface Room {
   id: string;
@@ -38,10 +38,25 @@ const statusIcons = {
 
 export default function Property() {
   const [selectedType, setSelectedType] = useState<string>('all');
+  const [rooms, setRooms] = useState<Room[]>([
+    { id: '101', number: '101', type: 'Standard', status: 'vacant' },
+    { id: '102', number: '102', type: 'Deluxe', status: 'occupied', guest: 'John Smith', checkOut: '2025-04-30' },
+    { id: '103', number: '103', type: 'Suite', status: 'maintenance' },
+    { id: '104', number: '104', type: 'Standard', status: 'cleaning' },
+  ]);
+  const [isAddRoomOpen, setIsAddRoomOpen] = useState(false);
 
   const filteredRooms = selectedType === 'all' 
     ? rooms 
     : rooms.filter(room => room.type === selectedType);
+
+  const handleAddRoom = (newRoom: { number: string; type: string; status: 'vacant' | 'occupied' | 'maintenance' | 'cleaning' }) => {
+    const room: Room = {
+      id: String(Date.now()),
+      ...newRoom
+    };
+    setRooms(prevRooms => [...prevRooms, room]);
+  };
 
   return (
     <MainLayout title="Property Management">
@@ -64,7 +79,10 @@ export default function Property() {
               </Button>
             ))}
           </div>
-          <Button>Add Room</Button>
+          <Button onClick={() => setIsAddRoomOpen(true)} className="bg-blue-600 hover:bg-blue-700">
+            <Plus className="mr-2 h-4 w-4" />
+            Add Room
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -103,6 +121,12 @@ export default function Property() {
             );
           })}
         </div>
+
+        <AddRoomDialog
+          open={isAddRoomOpen}
+          onOpenChange={setIsAddRoomOpen}
+          onAddRoom={handleAddRoom}
+        />
       </div>
     </MainLayout>
   );
