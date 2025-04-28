@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { NewGuestDialog } from "@/components/guests/NewGuestDialog";
 
 interface Guest {
   id: string;
@@ -57,12 +58,17 @@ const statusColors = {
 
 export default function Guests() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [guestList, setGuestList] = useState<Guest[]>(guests);
 
-  const filteredGuests = guests.filter(guest => 
+  const filteredGuests = guestList.filter(guest => 
     guest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     guest.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
     guest.room.includes(searchTerm)
   );
+
+  const handleAddGuest = (newGuest: Guest) => {
+    setGuestList(prev => [...prev, newGuest]);
+  };
 
   return (
     <MainLayout title="Guest Management">
@@ -75,7 +81,7 @@ export default function Guests() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <Button>New Guest</Button>
+          <NewGuestDialog onGuestAdded={handleAddGuest} />
         </div>
 
         <div className="bg-white rounded-lg border">
