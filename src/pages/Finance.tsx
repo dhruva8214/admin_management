@@ -10,10 +10,15 @@ import {
   Receipt, 
   Wallet, 
   CircleDollarSign,
-  CirclePercent 
+  CirclePercent,
+  FilePlus,
+  FileText
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RevenueChart from "@/components/dashboard/RevenueChart";
+import NewInvoiceDialog from "@/components/finance/NewInvoiceDialog";
+import RecordExpenseDialog from "@/components/finance/RecordExpenseDialog";
+import GenerateReportDialog from "@/components/finance/GenerateReportDialog";
 
 // Sample financial data
 const expenses = [
@@ -34,6 +39,25 @@ const invoices = [
 
 export default function Finance() {
   const [activeTab, setActiveTab] = useState("overview");
+  
+  // State for dialogs
+  const [newInvoiceOpen, setNewInvoiceOpen] = useState(false);
+  const [recordExpenseOpen, setRecordExpenseOpen] = useState(false);
+  const [generateReportOpen, setGenerateReportOpen] = useState(false);
+  
+  // State for data
+  const [invoicesList, setInvoicesList] = useState(invoices);
+  const [expensesList, setExpensesList] = useState(expenses);
+
+  // Handle new invoice
+  const handleNewInvoiceSuccess = (newInvoice: any) => {
+    setInvoicesList(prev => [newInvoice, ...prev]);
+  };
+
+  // Handle new expense
+  const handleNewExpenseSuccess = (newExpense: any) => {
+    setExpensesList(prev => [newExpense, ...prev]);
+  };
 
   return (
     <MainLayout title="Financial Management">
@@ -134,7 +158,10 @@ export default function Finance() {
                     <CardTitle>Recent Invoices</CardTitle>
                     <CardDescription>Manage your customer invoices</CardDescription>
                   </div>
-                  <Button size="sm">New Invoice</Button>
+                  <Button size="sm" onClick={() => setNewInvoiceOpen(true)} className="gap-1">
+                    <FilePlus className="h-4 w-4" />
+                    New Invoice
+                  </Button>
                 </div>
               </CardHeader>
               <CardContent>
@@ -151,7 +178,7 @@ export default function Finance() {
                       </tr>
                     </thead>
                     <tbody>
-                      {invoices.map(invoice => (
+                      {invoicesList.map(invoice => (
                         <tr key={invoice.id} className="border-b hover:bg-muted/50">
                           <td className="py-3 px-4 font-medium">{invoice.id}</td>
                           <td className="py-3 px-4">{invoice.guest}</td>
@@ -191,7 +218,10 @@ export default function Finance() {
                     <CardTitle>Recent Expenses</CardTitle>
                     <CardDescription>Track your business expenses</CardDescription>
                   </div>
-                  <Button size="sm">Record Expense</Button>
+                  <Button size="sm" onClick={() => setRecordExpenseOpen(true)} className="gap-1">
+                    <Wallet className="h-4 w-4" />
+                    Record Expense
+                  </Button>
                 </div>
               </CardHeader>
               <CardContent>
@@ -206,7 +236,7 @@ export default function Finance() {
                       </tr>
                     </thead>
                     <tbody>
-                      {expenses.map(expense => (
+                      {expensesList.map(expense => (
                         <tr key={expense.id} className="border-b hover:bg-muted/50">
                           <td className="py-3 px-4 font-medium">{expense.category}</td>
                           <td className="py-3 px-4">${expense.amount.toLocaleString()}</td>
@@ -246,7 +276,14 @@ export default function Finance() {
                       <BarChart2 className="h-16 w-16 text-blue-500" />
                     </CardContent>
                     <CardFooter>
-                      <Button className="w-full" variant="outline">Generate Report</Button>
+                      <Button 
+                        className="w-full" 
+                        variant="outline" 
+                        onClick={() => setGenerateReportOpen(true)}
+                      >
+                        <FileText className="h-4 w-4 mr-1" />
+                        Generate Report
+                      </Button>
                     </CardFooter>
                   </Card>
                   
@@ -258,7 +295,14 @@ export default function Finance() {
                       <DollarSign className="h-16 w-16 text-green-500" />
                     </CardContent>
                     <CardFooter>
-                      <Button className="w-full" variant="outline">Generate Report</Button>
+                      <Button 
+                        className="w-full" 
+                        variant="outline" 
+                        onClick={() => setGenerateReportOpen(true)}
+                      >
+                        <FileText className="h-4 w-4 mr-1" />
+                        Generate Report
+                      </Button>
                     </CardFooter>
                   </Card>
                 </div>
@@ -267,6 +311,24 @@ export default function Finance() {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Dialogs */}
+      <NewInvoiceDialog 
+        open={newInvoiceOpen} 
+        onOpenChange={setNewInvoiceOpen} 
+        onSuccess={handleNewInvoiceSuccess} 
+      />
+      
+      <RecordExpenseDialog 
+        open={recordExpenseOpen} 
+        onOpenChange={setRecordExpenseOpen} 
+        onSuccess={handleNewExpenseSuccess}
+      />
+      
+      <GenerateReportDialog 
+        open={generateReportOpen} 
+        onOpenChange={setGenerateReportOpen} 
+      />
     </MainLayout>
   );
 }
