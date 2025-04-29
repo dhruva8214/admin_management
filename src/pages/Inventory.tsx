@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -31,6 +30,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { AddItemDialog } from "@/components/inventory/AddItemDialog";
 
 // Sample inventory data
 const inventory = [
@@ -196,9 +196,7 @@ export default function Inventory() {
                   </SelectContent>
                 </Select>
               </div>
-              <Button className="w-full md:w-auto">
-                <Plus className="mr-2 h-4 w-4" /> Add Item
-              </Button>
+              <AddItemDialog />
             </div>
 
             <Card>
