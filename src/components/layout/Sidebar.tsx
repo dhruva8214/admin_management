@@ -12,7 +12,7 @@ import {
   BarChart2,
   ClipboardList, 
   PackageOpen, 
-  Settings,
+  CreditCard,
   Menu,
   X
 } from "lucide-react";
@@ -65,9 +65,9 @@ const navItems: NavItem[] = [
     icon: ClipboardList,
   },
   {
-    title: "Settings",
-    href: "/settings",
-    icon: Settings,
+    title: "Billing",
+    href: "/billing",
+    icon: CreditCard,
   },
 ];
 
