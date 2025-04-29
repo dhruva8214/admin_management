@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   Dialog,
@@ -21,6 +20,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Plus } from "lucide-react";
 
 export function AddTaskDialog({ onTaskAdded }: { onTaskAdded: (task: any) => void }) {
   const { toast } = useToast();
@@ -45,7 +45,6 @@ export function AddTaskDialog({ onTaskAdded }: { onTaskAdded: (task: any) => voi
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Create a new task with a unique ID
     const newTask = {
       id: `T${Date.now().toString().slice(-5)}`,
       title: formData.title,
@@ -57,16 +56,13 @@ export function AddTaskDialog({ onTaskAdded }: { onTaskAdded: (task: any) => voi
       dueTime: formData.dueTime || undefined,
     };
     
-    // Add the task via the callback
     onTaskAdded(newTask);
     
-    // Show success toast
     toast({
       title: "Task Created",
       description: `${formData.title} has been assigned to ${formData.assignee}.`,
     });
     
-    // Reset form and close dialog
     setFormData({
       title: "",
       assignee: "",
