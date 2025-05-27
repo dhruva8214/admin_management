@@ -1,40 +1,18 @@
 
-import { useState } from "react";
-import { toast } from "sonner";
 import MainLayout from "@/components/layout/MainLayout";
+import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookingCalendar } from "@/components/reservations/BookingCalendar";
 import { ReservationForm } from "@/components/reservations/ReservationForm";
-import { ReservationList, Reservation } from "@/components/reservations/ReservationList";
+import { ReservationList } from "@/components/reservations/ReservationList";
 import { GroupBookings } from "@/components/reservations/GroupBookings";
 import { RatePlans } from "@/components/reservations/RatePlans";
 import { CalendarDays, ListTodo, UserPlus, BarChart2 } from "lucide-react";
+import { useReservations } from "@/hooks/useReservations";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Reservations() {
-  const [reservations, setReservations] = useState<Reservation[]>([
-    {
-      id: "1",
-      guestName: "Alex Johnson",
-      email: "alex@example.com",
-      phone: "555-123-4567",
-      roomType: "Suite",
-      checkIn: new Date(2025, 3, 30),
-      checkOut: new Date(2025, 4, 5),
-      guests: 2,
-      status: "confirmed",
-    },
-    {
-      id: "2",
-      guestName: "Sarah Parker",
-      email: "sarah@example.com",
-      phone: "555-987-6543",
-      roomType: "Deluxe",
-      checkIn: new Date(2025, 4, 1),
-      checkOut: new Date(2025, 4, 3),
-      guests: 1,
-      status: "checked-in",
-    },
-  ]);
+  const { reservations, loading, addReservation, updateReservationStatus } = useReservations();
 
   const handleAddReservation = (newReservation: {
     guestName: string;
@@ -45,43 +23,45 @@ export default function Reservations() {
     checkOut: Date;
     guests: number;
   }) => {
-    const reservation: Reservation = {
-      id: String(Date.now()),
-      ...newReservation,
-      status: "confirmed",
-    };
-    setReservations([...reservations, reservation]);
+    addReservation({
+      guest_name: newReservation.guestName,
+      email: newReservation.email,
+      phone: newReservation.phone,
+      room_type: newReservation.roomType,
+      check_in_date: newReservation.checkIn,
+      check_out_date: newReservation.checkOut,
+      guests: newReservation.guests,
+    });
     toast.success("Reservation created successfully", {
-      description: `${reservation.guestName} booked from ${reservation.checkIn.toLocaleDateString()} to ${reservation.checkOut.toLocaleDateString()}`
+      description: `${newReservation.guestName} booked from ${newReservation.checkIn.toLocaleDateString()} to ${newReservation.checkOut.toLocaleDateString()}`
     });
   };
 
   const handleCancelReservation = (id: string) => {
-    setReservations(
-      reservations.map((res) =>
-        res.id === id ? { ...res, status: "cancelled" as const } : res
-      )
-    );
+    updateReservationStatus(id, "cancelled");
     toast.info("Reservation cancelled");
   };
 
   const handleCheckIn = (id: string) => {
-    setReservations(
-      reservations.map((res) =>
-        res.id === id ? { ...res, status: "checked-in" as const } : res
-      )
-    );
+    updateReservationStatus(id, "checked-in");
     toast.success("Guest checked in successfully");
   };
 
   const handleCheckOut = (id: string) => {
-    setReservations(
-      reservations.map((res) =>
-        res.id === id ? { ...res, status: "checked-out" as const } : res
-      )
-    );
+    updateReservationStatus(id, "checked-out");
     toast.success("Guest checked out successfully");
   };
+
+  if (loading) {
+    return (
+      <MainLayout title="Reservations">
+        <div className="space-y-6">
+          <Skeleton className="h-12 w-full" />
+          <Skeleton className="h-96 w-full" />
+        </div>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout title="Reservations">

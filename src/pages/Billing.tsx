@@ -1,54 +1,17 @@
 
-import { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AddBillingDialog } from "@/components/billing/AddBillingDialog";
 import { BillingList } from "@/components/billing/BillingList";
-
-export type BillingItem = {
-  id: string;
-  guestName: string;
-  roomNumber: string;
-  amount: number;
-  description: string;
-  date: string;
-  status: "paid" | "pending" | "overdue";
-}
+import { useBilling, BillingItem } from "@/hooks/useBilling";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Billing() {
-  const [billingItems, setBillingItems] = useState<BillingItem[]>([
-    {
-      id: "B12345",
-      guestName: "John Doe",
-      roomNumber: "302",
-      amount: 12450.00,
-      description: "Room service",
-      date: "2025-04-28",
-      status: "paid"
-    },
-    {
-      id: "B12346",
-      guestName: "Jane Smith",
-      roomNumber: "405",
-      amount: 6266.50,
-      description: "Mini bar",
-      date: "2025-04-29",
-      status: "pending"
-    },
-    {
-      id: "B12347",
-      guestName: "Robert Johnson",
-      roomNumber: "201",
-      amount: 20750.00,
-      description: "Late checkout fee",
-      date: "2025-04-27",
-      status: "overdue"
-    }
-  ]);
+  const { billingItems, loading, addBilling } = useBilling();
 
   const handleAddBilling = (newBill: BillingItem) => {
-    setBillingItems(prev => [...prev, newBill]);
+    addBilling(newBill);
   };
 
   const filterBilling = (status: string) => {
@@ -57,6 +20,20 @@ export default function Billing() {
     }
     return billingItems.filter(item => item.status === status);
   };
+
+  if (loading) {
+    return (
+      <MainLayout title="Billing">
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <Skeleton className="h-8 w-48" />
+            <Skeleton className="h-10 w-32" />
+          </div>
+          <Skeleton className="h-96 w-full" />
+        </div>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout title="Billing">
@@ -143,3 +120,5 @@ export default function Billing() {
     </MainLayout>
   );
 }
+
+export type { BillingItem };

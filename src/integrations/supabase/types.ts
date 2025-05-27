@@ -9,7 +9,117 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      billing: {
+        Row: {
+          amount: number
+          created_at: string
+          date: string
+          description: string
+          guest_name: string
+          id: string
+          room_number: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          date?: string
+          description: string
+          guest_name: string
+          id: string
+          room_number: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          date?: string
+          description?: string
+          guest_name?: string
+          id?: string
+          room_number?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      reservations: {
+        Row: {
+          check_in_date: string
+          check_out_date: string
+          created_at: string
+          email: string
+          guest_name: string
+          guests: number
+          id: string
+          phone: string
+          room_type: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          check_in_date: string
+          check_out_date: string
+          created_at?: string
+          email: string
+          guest_name: string
+          guests: number
+          id: string
+          phone: string
+          room_type: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          check_in_date?: string
+          check_out_date?: string
+          created_at?: string
+          email?: string
+          guest_name?: string
+          guests?: number
+          id?: string
+          phone?: string
+          room_type?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      rooms: {
+        Row: {
+          check_out_date: string | null
+          created_at: string
+          guest_name: string | null
+          id: string
+          number: string
+          status: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          check_out_date?: string | null
+          created_at?: string
+          guest_name?: string | null
+          id?: string
+          number: string
+          status?: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          check_out_date?: string | null
+          created_at?: string
+          guest_name?: string | null
+          id?: string
+          number?: string
+          status?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

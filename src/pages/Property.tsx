@@ -7,18 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Wrench, ClipboardList, UserRound, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AddRoomDialog } from "@/components/property/AddRoomDialog";
-
-type RoomType = 'Standard' | 'Deluxe' | 'Suite' | 'Penthouse';
-type RoomStatus = 'vacant' | 'occupied' | 'maintenance' | 'cleaning';
-
-interface Room {
-  id: string;
-  number: string;
-  type: RoomType;
-  status: RoomStatus;
-  guest?: string;
-  checkOut?: string;
-}
+import { useRooms, RoomType, RoomStatus } from "@/hooks/useRooms";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const statusColors = {
   vacant: 'bg-green-100 text-green-800 border-green-200',
@@ -35,25 +25,39 @@ const statusIcons = {
 
 export default function Property() {
   const [selectedType, setSelectedType] = useState<string>('all');
-  const [rooms, setRooms] = useState<Room[]>([
-    { id: '101', number: '101', type: 'Standard', status: 'vacant' },
-    { id: '102', number: '102', type: 'Deluxe', status: 'occupied', guest: 'John Smith', checkOut: '2025-04-30' },
-    { id: '103', number: '103', type: 'Suite', status: 'maintenance' },
-    { id: '104', number: '104', type: 'Standard', status: 'cleaning' },
-  ]);
   const [isAddRoomOpen, setIsAddRoomOpen] = useState(false);
+  const { rooms, loading, addRoom } = useRooms();
 
   const filteredRooms = selectedType === 'all' 
     ? rooms 
     : rooms.filter(room => room.type === selectedType);
 
   const handleAddRoom = (newRoom: { number: string; type: RoomType; status: RoomStatus }) => {
-    const room: Room = {
-      id: String(Date.now()),
-      ...newRoom
-    };
-    setRooms(prevRooms => [...prevRooms, room]);
+    addRoom(newRoom);
+    setIsAddRoomOpen(false);
   };
+
+  if (loading) {
+    return (
+      <MainLayout title="Property Management">
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <div className="space-x-2">
+              <Skeleton className="h-10 w-20" />
+              <Skeleton className="h-10 w-20" />
+              <Skeleton className="h-10 w-20" />
+            </div>
+            <Skeleton className="h-10 w-32" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {[...Array(8)].map((_, i) => (
+              <Skeleton key={i} className="h-32 w-full" />
+            ))}
+          </div>
+        </div>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout title="Property Management">
@@ -98,12 +102,12 @@ export default function Property() {
                   
                   <div className="space-y-2">
                     <p className="text-sm text-muted-foreground">Type: {room.type}</p>
-                    {room.guest && (
-                      <p className="text-sm text-muted-foreground">Guest: {room.guest}</p>
+                    {room.guest_name && (
+                      <p className="text-sm text-muted-foreground">Guest: {room.guest_name}</p>
                     )}
-                    {room.checkOut && (
+                    {room.check_out_date && (
                       <p className="text-sm text-muted-foreground">
-                        Check-out: {new Date(room.checkOut).toLocaleDateString()}
+                        Check-out: {new Date(room.check_out_date).toLocaleDateString()}
                       </p>
                     )}
                     {StatusIcon && (
@@ -118,6 +122,12 @@ export default function Property() {
             );
           })}
         </div>
+
+        {filteredRooms.length === 0 && !loading && (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">No rooms found. Add your first room to get started!</p>
+          </div>
+        )}
 
         <AddRoomDialog
           open={isAddRoomOpen}
