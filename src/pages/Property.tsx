@@ -70,7 +70,7 @@ export default function Property() {
             >
               All Rooms
             </Button>
-            {['Standard', 'Deluxe', 'Suite', 'Penthouse'].map(type => (
+            {(['Standard', 'Deluxe', 'Suite', 'Penthouse'] as RoomType[]).map(type => (
               <Button
                 key={type}
                 variant={selectedType === type ? 'default' : 'outline'}

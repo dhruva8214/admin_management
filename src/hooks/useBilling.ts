@@ -31,7 +31,7 @@ export function useBilling() {
         id: item.id,
         guest_name: item.guest_name,
         room_number: item.room_number,
-        amount: parseFloat(item.amount.toString()),
+        amount: Number(item.amount),
         description: item.description,
         date: item.date,
         status: item.status as 'paid' | 'pending' | 'overdue'
@@ -52,15 +52,15 @@ export function useBilling() {
     try {
       const { data, error } = await supabase
         .from('billing')
-        .insert([{
+        .insert({
           id: `B${Date.now().toString().slice(-5)}`,
           guest_name: billingData.guest_name,
           room_number: billingData.room_number,
-          amount: billingData.amount.toString(),
+          amount: billingData.amount,
           description: billingData.description,
           date: billingData.date,
           status: billingData.status
-        }])
+        })
         .select()
         .single();
 
@@ -70,7 +70,7 @@ export function useBilling() {
         id: data.id,
         guest_name: data.guest_name,
         room_number: data.room_number,
-        amount: parseFloat(data.amount.toString()),
+        amount: Number(data.amount),
         description: data.description,
         date: data.date,
         status: data.status as 'paid' | 'pending' | 'overdue'
