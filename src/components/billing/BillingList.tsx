@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MoreHorizontal } from "lucide-react";
-import { BillingItem } from "@/pages/Billing";
+import { BillingItem } from "@/hooks/useBilling";
 
 const statusColors = {
   paid: "bg-green-100 text-green-800",
@@ -53,8 +53,8 @@ export function BillingList({ items }: { items: BillingItem[] }) {
             items.map((item) => (
               <TableRow key={item.id}>
                 <TableCell className="font-medium">{item.id}</TableCell>
-                <TableCell>{item.guestName}</TableCell>
-                <TableCell>{item.roomNumber}</TableCell>
+                <TableCell>{item.guest_name}</TableCell>
+                <TableCell>{item.room_number}</TableCell>
                 <TableCell>{item.description}</TableCell>
                 <TableCell>{item.date}</TableCell>
                 <TableCell className="font-medium">₹{item.amount.toLocaleString('en-IN')}</TableCell>

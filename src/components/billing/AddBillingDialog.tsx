@@ -21,17 +21,17 @@ import {
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Plus } from "lucide-react";
-import { BillingItem } from "@/pages/Billing";
+import { BillingItem } from "@/hooks/useBilling";
 
-export function AddBillingDialog({ onBillingAdded }: { onBillingAdded: (bill: BillingItem) => void }) {
+export function AddBillingDialog({ onBillingAdded }: { onBillingAdded: (bill: Omit<BillingItem, 'id'>) => void }) {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
-    guestName: "",
-    roomNumber: "",
+    guest_name: "",
+    room_number: "",
     amount: "",
     description: "",
-    status: "pending",
+    status: "pending" as "paid" | "pending" | "overdue",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,26 +46,25 @@ export function AddBillingDialog({ onBillingAdded }: { onBillingAdded: (bill: Bi
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const newBill: BillingItem = {
-      id: `B${Date.now().toString().slice(-5)}`,
-      guestName: formData.guestName,
-      roomNumber: formData.roomNumber,
+    const newBill: Omit<BillingItem, 'id'> = {
+      guest_name: formData.guest_name,
+      room_number: formData.room_number,
       amount: parseFloat(formData.amount),
       description: formData.description,
       date: new Date().toISOString().split('T')[0],
-      status: formData.status as "paid" | "pending" | "overdue",
+      status: formData.status,
     };
     
     onBillingAdded(newBill);
     
     toast({
       title: "Billing Created",
-      description: `${formData.guestName} has been billed ₹${parseFloat(formData.amount).toLocaleString('en-IN')}.`,
+      description: `${formData.guest_name} has been billed ₹${parseFloat(formData.amount).toLocaleString('en-IN')}.`,
     });
     
     setFormData({
-      guestName: "",
-      roomNumber: "",
+      guest_name: "",
+      room_number: "",
       amount: "",
       description: "",
       status: "pending",
@@ -90,13 +89,13 @@ export function AddBillingDialog({ onBillingAdded }: { onBillingAdded: (bill: Bi
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="guestName" className="text-right">
+              <Label htmlFor="guest_name" className="text-right">
                 Guest Name
               </Label>
               <Input
-                id="guestName"
-                name="guestName"
-                value={formData.guestName}
+                id="guest_name"
+                name="guest_name"
+                value={formData.guest_name}
                 onChange={handleChange}
                 className="col-span-3"
                 placeholder="e.g., John Doe"
@@ -105,13 +104,13 @@ export function AddBillingDialog({ onBillingAdded }: { onBillingAdded: (bill: Bi
             </div>
             
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="roomNumber" className="text-right">
+              <Label htmlFor="room_number" className="text-right">
                 Room Number
               </Label>
               <Input
-                id="roomNumber"
-                name="roomNumber"
-                value={formData.roomNumber}
+                id="room_number"
+                name="room_number"
+                value={formData.room_number}
                 onChange={handleChange}
                 className="col-span-3"
                 placeholder="e.g., 302"

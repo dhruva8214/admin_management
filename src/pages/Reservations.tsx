@@ -52,6 +52,19 @@ export default function Reservations() {
     toast.success("Guest checked out successfully");
   };
 
+  // Convert reservations to match ReservationList component interface
+  const convertedReservations = reservations.map(reservation => ({
+    id: reservation.id,
+    guestName: reservation.guest_name,
+    email: reservation.email,
+    phone: reservation.phone,
+    roomType: reservation.room_type,
+    checkIn: reservation.check_in_date,
+    checkOut: reservation.check_out_date,
+    guests: reservation.guests,
+    status: reservation.status
+  }));
+
   if (loading) {
     return (
       <MainLayout title="Reservations">
@@ -101,7 +114,7 @@ export default function Reservations() {
             <div className="space-y-6">
               <h2 className="text-xl font-semibold">Manage Reservations</h2>
               <ReservationList
-                reservations={reservations}
+                reservations={convertedReservations}
                 onCancelReservation={handleCancelReservation}
                 onCheckIn={handleCheckIn}
                 onCheckOut={handleCheckOut}

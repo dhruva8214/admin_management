@@ -10,7 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function Billing() {
   const { billingItems, loading, addBilling } = useBilling();
 
-  const handleAddBilling = (newBill: BillingItem) => {
+  const handleAddBilling = (newBill: Omit<BillingItem, 'id'>) => {
     addBilling(newBill);
   };
 
