@@ -57,7 +57,7 @@ export function BillingList({ items }: { items: BillingItem[] }) {
                 <TableCell>{item.roomNumber}</TableCell>
                 <TableCell>{item.description}</TableCell>
                 <TableCell>{item.date}</TableCell>
-                <TableCell className="font-medium">${item.amount.toFixed(2)}</TableCell>
+                <TableCell className="font-medium">₹{item.amount.toLocaleString('en-IN')}</TableCell>
                 <TableCell>
                   <Badge 
                     variant="outline" 

@@ -60,7 +60,7 @@ export function AddBillingDialog({ onBillingAdded }: { onBillingAdded: (bill: Bi
     
     toast({
       title: "Billing Created",
-      description: `${formData.guestName} has been billed $${formData.amount}.`,
+      description: `${formData.guestName} has been billed ₹${parseFloat(formData.amount).toLocaleString('en-IN')}.`,
     });
     
     setFormData({
@@ -121,7 +121,7 @@ export function AddBillingDialog({ onBillingAdded }: { onBillingAdded: (bill: Bi
             
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="amount" className="text-right">
-                Amount ($)
+                Amount (₹)
               </Label>
               <Input
                 id="amount"
@@ -131,7 +131,7 @@ export function AddBillingDialog({ onBillingAdded }: { onBillingAdded: (bill: Bi
                 value={formData.amount}
                 onChange={handleChange}
                 className="col-span-3"
-                placeholder="e.g., 150.00"
+                placeholder="e.g., 12450.00"
                 required
               />
             </div>

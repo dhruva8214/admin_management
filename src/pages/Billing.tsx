@@ -22,7 +22,7 @@ export default function Billing() {
       id: "B12345",
       guestName: "John Doe",
       roomNumber: "302",
-      amount: 150.00,
+      amount: 12450.00,
       description: "Room service",
       date: "2025-04-28",
       status: "paid"
@@ -31,7 +31,7 @@ export default function Billing() {
       id: "B12346",
       guestName: "Jane Smith",
       roomNumber: "405",
-      amount: 75.50,
+      amount: 6266.50,
       description: "Mini bar",
       date: "2025-04-29",
       status: "pending"
@@ -40,7 +40,7 @@ export default function Billing() {
       id: "B12347",
       guestName: "Robert Johnson",
       roomNumber: "201",
-      amount: 250.00,
+      amount: 20750.00,
       description: "Late checkout fee",
       date: "2025-04-27",
       status: "overdue"
@@ -106,7 +106,7 @@ export default function Billing() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-2xl font-bold">
-                    ${billingItems.reduce((sum, item) => sum + item.amount, 0).toFixed(2)}
+                    ₹{billingItems.reduce((sum, item) => sum + item.amount, 0).toLocaleString('en-IN')}
                   </p>
                 </CardContent>
               </Card>
@@ -116,10 +116,10 @@ export default function Billing() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-2xl font-bold">
-                    ${billingItems
+                    ₹{billingItems
                       .filter(item => item.status !== "paid")
                       .reduce((sum, item) => sum + item.amount, 0)
-                      .toFixed(2)}
+                      .toLocaleString('en-IN')}
                   </p>
                 </CardContent>
               </Card>
@@ -129,10 +129,10 @@ export default function Billing() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-2xl font-bold">
-                    ${billingItems
+                    ₹{billingItems
                       .filter(item => item.status === "paid")
                       .reduce((sum, item) => sum + item.amount, 0)
-                      .toFixed(2)}
+                      .toLocaleString('en-IN')}
                   </p>
                 </CardContent>
               </Card>

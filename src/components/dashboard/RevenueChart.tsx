@@ -11,20 +11,20 @@ import {
 } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-// Sample data for the chart
+// Sample data for the chart (converted to INR)
 const data = [
-  { name: 'Week 1', revenue: 42000 },
-  { name: 'Week 2', revenue: 38000 },
-  { name: 'Week 3', revenue: 45000 },
-  { name: 'Week 4', revenue: 52000 },
-  { name: 'Week 5', revenue: 48000 },
-  { name: 'Week 6', revenue: 55000 },
-  { name: 'Week 7', revenue: 62000 },
-  { name: 'Week 8', revenue: 58000 },
-  { name: 'Week 9', revenue: 65000 },
-  { name: 'Week 10', revenue: 70000 },
-  { name: 'Week 11', revenue: 68000 },
-  { name: 'Week 12', revenue: 75000 },
+  { name: 'Week 1', revenue: 3486000 },
+  { name: 'Week 2', revenue: 3154000 },
+  { name: 'Week 3', revenue: 3735000 },
+  { name: 'Week 4', revenue: 4316000 },
+  { name: 'Week 5', revenue: 3984000 },
+  { name: 'Week 6', revenue: 4565000 },
+  { name: 'Week 7', revenue: 5146000 },
+  { name: 'Week 8', revenue: 4814000 },
+  { name: 'Week 9', revenue: 5395000 },
+  { name: 'Week 10', revenue: 5810000 },
+  { name: 'Week 11', revenue: 5644000 },
+  { name: 'Week 12', revenue: 6225000 },
 ];
 
 // Custom tooltip component
@@ -34,7 +34,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
       <div className="bg-white p-3 border rounded shadow-sm">
         <p className="font-medium">{label}</p>
         <p className="text-teal-600">
-          Revenue: ${payload[0].value?.toLocaleString()}
+          Revenue: ₹{payload[0].value?.toLocaleString('en-IN')}
         </p>
       </div>
     );
@@ -44,10 +44,14 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
 
 // Function to format y-axis ticks
 const formatYAxis = (value: number) => {
-  if (value >= 1000) {
-    return `$${value / 1000}k`;
+  if (value >= 10000000) {
+    return `₹${(value / 10000000).toFixed(1)}Cr`;
+  } else if (value >= 100000) {
+    return `₹${(value / 100000).toFixed(1)}L`;
+  } else if (value >= 1000) {
+    return `₹${(value / 1000).toFixed(0)}k`;
   }
-  return `$${value}`;
+  return `₹${value}`;
 };
 
 export default function RevenueChart() {

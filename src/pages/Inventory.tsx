@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,7 +33,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { AddItemDialog } from "@/components/inventory/AddItemDialog";
 
-// Sample inventory data
+// Sample inventory data (converted to INR)
 const inventory = [
   { 
     id: 1, 
@@ -40,7 +41,7 @@ const inventory = [
     category: "Linens", 
     stock: 245, 
     minStock: 50, 
-    costPerUnit: 8.50, 
+    costPerUnit: 706, 
     supplier: "LinenMaster Inc." 
   },
   { 
@@ -49,7 +50,7 @@ const inventory = [
     category: "Toiletries", 
     stock: 120, 
     minStock: 30, 
-    costPerUnit: 3.25, 
+    costPerUnit: 270, 
     supplier: "CleanSupplies Co." 
   },
   { 
@@ -58,7 +59,7 @@ const inventory = [
     category: "Toiletries", 
     stock: 325, 
     minStock: 100, 
-    costPerUnit: 0.75, 
+    costPerUnit: 62, 
     supplier: "EcoProducts Ltd." 
   },
   { 
@@ -67,7 +68,7 @@ const inventory = [
     category: "Linens", 
     stock: 85, 
     minStock: 40, 
-    costPerUnit: 24.99, 
+    costPerUnit: 2074, 
     supplier: "LinenMaster Inc." 
   },
   { 
@@ -76,7 +77,7 @@ const inventory = [
     category: "Maintenance", 
     stock: 48, 
     minStock: 30, 
-    costPerUnit: 4.50, 
+    costPerUnit: 374, 
     supplier: "ElectroSupply" 
   },
   { 
@@ -85,17 +86,17 @@ const inventory = [
     category: "Food & Beverage", 
     stock: 24, 
     minStock: 50, 
-    costPerUnit: 0.60, 
+    costPerUnit: 50, 
     supplier: "GourmetCoffee Co." 
   }
 ];
 
-// Sample purchase orders
+// Sample purchase orders (converted to INR)
 const purchaseOrders = [
-  { id: "PO-001", items: "Bath Towels, Hand Soap", supplier: "LinenMaster Inc.", cost: 1850, status: "delivered", date: "2025-04-12" },
-  { id: "PO-002", items: "Coffee Pods, Tea Bags", supplier: "GourmetCoffee Co.", cost: 675, status: "pending", date: "2025-04-18" },
-  { id: "PO-003", items: "Toilet Paper, Tissues", supplier: "EcoProducts Ltd.", cost: 980, status: "shipped", date: "2025-04-15" },
-  { id: "PO-004", items: "Cleaning Supplies", supplier: "CleanSupplies Co.", cost: 1250, status: "pending", date: "2025-04-20" },
+  { id: "PO-001", items: "Bath Towels, Hand Soap", supplier: "LinenMaster Inc.", cost: 153575, status: "delivered", date: "2025-04-12" },
+  { id: "PO-002", items: "Coffee Pods, Tea Bags", supplier: "GourmetCoffee Co.", cost: 56025, status: "pending", date: "2025-04-18" },
+  { id: "PO-003", items: "Toilet Paper, Tissues", supplier: "EcoProducts Ltd.", cost: 81340, status: "shipped", date: "2025-04-15" },
+  { id: "PO-004", items: "Cleaning Supplies", supplier: "CleanSupplies Co.", cost: 103750, status: "pending", date: "2025-04-20" },
 ];
 
 export default function Inventory() {
@@ -147,7 +148,7 @@ export default function Inventory() {
               <PackageOpen className="h-5 w-5 text-green-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-green-900">${totalValue.toLocaleString()}</div>
+              <div className="text-3xl font-bold text-green-900">₹{totalValue.toLocaleString('en-IN')}</div>
               <p className="text-sm text-green-700 mt-1">Total items: {totalItems}</p>
             </CardContent>
           </Card>
@@ -241,7 +242,7 @@ export default function Inventory() {
                               />
                             </div>
                           </TableCell>
-                          <TableCell className="text-right">${item.costPerUnit.toFixed(2)}</TableCell>
+                          <TableCell className="text-right">₹{item.costPerUnit.toLocaleString('en-IN')}</TableCell>
                           <TableCell>{item.supplier}</TableCell>
                           <TableCell className="text-right">
                             <Button variant="outline" size="sm">Update</Button>
@@ -294,7 +295,7 @@ export default function Inventory() {
                             {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                           </Badge>
                         </TableCell>
-                        <TableCell className="text-right">${order.cost.toLocaleString()}</TableCell>
+                        <TableCell className="text-right">₹{order.cost.toLocaleString('en-IN')}</TableCell>
                         <TableCell className="text-right">
                           <Button variant="outline" size="sm">View</Button>
                         </TableCell>

@@ -35,13 +35,13 @@ export default function Dashboard() {
         />
         <StatCard 
           title="Average Daily Rate" 
-          value="$249.99" 
+          value="₹20,750" 
           icon={<DollarSign size={18} />} 
           trend={{ value: 5, isPositive: true }}
         />
         <StatCard 
           title="Revenue" 
-          value="$15,480" 
+          value="₹12,85,000" 
           icon={<Percent size={18} />} 
           trend={{ value: 2, isPositive: false }}
           description="Daily revenue"

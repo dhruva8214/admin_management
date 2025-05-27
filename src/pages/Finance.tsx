@@ -20,21 +20,21 @@ import NewInvoiceDialog from "@/components/finance/NewInvoiceDialog";
 import RecordExpenseDialog from "@/components/finance/RecordExpenseDialog";
 import GenerateReportDialog from "@/components/finance/GenerateReportDialog";
 
-// Sample financial data
+// Sample financial data (converted to INR)
 const expenses = [
-  { id: 1, category: "Utilities", amount: 2450, date: "2025-04-12" },
-  { id: 2, category: "Supplies", amount: 1875, date: "2025-04-10" },
-  { id: 3, category: "Maintenance", amount: 3200, date: "2025-04-08" },
-  { id: 4, category: "Staff Payroll", amount: 12500, date: "2025-04-05" },
-  { id: 5, category: "Marketing", amount: 1650, date: "2025-04-02" },
+  { id: 1, category: "Utilities", amount: 203550, date: "2025-04-12" },
+  { id: 2, category: "Supplies", amount: 155625, date: "2025-04-10" },
+  { id: 3, category: "Maintenance", amount: 266000, date: "2025-04-08" },
+  { id: 4, category: "Staff Payroll", amount: 1037500, date: "2025-04-05" },
+  { id: 5, category: "Marketing", amount: 137050, date: "2025-04-02" },
 ];
 
 const invoices = [
-  { id: "INV-001", guest: "Michael Brown", amount: 1250, status: "paid", date: "2025-04-15" },
-  { id: "INV-002", guest: "Emma Watson", amount: 2350, status: "pending", date: "2025-04-14" },
-  { id: "INV-003", guest: "James Smith", amount: 1850, status: "paid", date: "2025-04-12" },
-  { id: "INV-004", guest: "Olivia Davis", amount: 3100, status: "overdue", date: "2025-04-08" },
-  { id: "INV-005", guest: "William Johnson", amount: 950, status: "paid", date: "2025-04-05" },
+  { id: "INV-001", guest: "Michael Brown", amount: 103750, status: "paid", date: "2025-04-15" },
+  { id: "INV-002", guest: "Emma Watson", amount: 195125, status: "pending", date: "2025-04-14" },
+  { id: "INV-003", guest: "James Smith", amount: 153625, status: "paid", date: "2025-04-12" },
+  { id: "INV-004", guest: "Olivia Davis", amount: 257300, status: "overdue", date: "2025-04-08" },
+  { id: "INV-005", guest: "William Johnson", amount: 78875, status: "paid", date: "2025-04-05" },
 ];
 
 export default function Finance() {
@@ -70,7 +70,7 @@ export default function Finance() {
               <DollarSign className="h-5 w-5 text-blue-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-blue-900">$148,250</div>
+              <div className="text-3xl font-bold text-blue-900">₹1,23,04,750</div>
               <p className="text-sm text-green-600 mt-2 flex items-center">
                 <span className="inline-block mr-1">↑</span> 12% from last month
               </p>
@@ -83,7 +83,7 @@ export default function Finance() {
               <CreditCard className="h-5 w-5 text-green-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-green-900">$42,180</div>
+              <div className="text-3xl font-bold text-green-900">₹35,00,940</div>
               <p className="text-sm text-red-600 mt-2 flex items-center">
                 <span className="inline-block mr-1">↑</span> 8% from last month
               </p>
@@ -109,7 +109,7 @@ export default function Finance() {
               <CircleDollarSign className="h-5 w-5 text-amber-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-amber-900">$14,580</div>
+              <div className="text-3xl font-bold text-amber-900">₹12,10,140</div>
               <p className="text-sm text-red-600 mt-2 flex items-center">
                 <span className="inline-block mr-1">↓</span> 5% from last month
               </p>
@@ -182,7 +182,7 @@ export default function Finance() {
                         <tr key={invoice.id} className="border-b hover:bg-muted/50">
                           <td className="py-3 px-4 font-medium">{invoice.id}</td>
                           <td className="py-3 px-4">{invoice.guest}</td>
-                          <td className="py-3 px-4">${invoice.amount.toLocaleString()}</td>
+                          <td className="py-3 px-4">₹{invoice.amount.toLocaleString('en-IN')}</td>
                           <td className="py-3 px-4">{invoice.date}</td>
                           <td className="py-3 px-4">
                             <span className={`px-2 py-1 rounded-full text-xs font-medium ${
@@ -239,7 +239,7 @@ export default function Finance() {
                       {expensesList.map(expense => (
                         <tr key={expense.id} className="border-b hover:bg-muted/50">
                           <td className="py-3 px-4 font-medium">{expense.category}</td>
-                          <td className="py-3 px-4">${expense.amount.toLocaleString()}</td>
+                          <td className="py-3 px-4">₹{expense.amount.toLocaleString('en-IN')}</td>
                           <td className="py-3 px-4">{expense.date}</td>
                           <td className="py-3 px-4 text-right">
                             <Button variant="outline" size="sm">View</Button>

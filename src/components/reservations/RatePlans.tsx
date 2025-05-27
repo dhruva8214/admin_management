@@ -6,19 +6,19 @@ export function RatePlans() {
   const ratePlans = [
     {
       name: "Standard Rate",
-      price: 129,
+      price: 10710,
       features: ["Free cancellation", "Breakfast not included", "Standard amenities"],
       popular: false,
     },
     {
       name: "Premium Package",
-      price: 189,
+      price: 15687,
       features: ["Free cancellation", "Breakfast included", "Welcome drink", "Premium amenities"],
       popular: true,
     },
     {
       name: "Extended Stay",
-      price: 109,
+      price: 9048,
       features: ["Min. 7 nights", "Weekly cleaning", "Kitchen access", "10% discount"],
       popular: false,
     },
@@ -51,7 +51,7 @@ export function RatePlans() {
                   </ul>
                 </div>
                 <div className="text-right">
-                  <div className="text-2xl font-bold">${plan.price}</div>
+                  <div className="text-2xl font-bold">₹{plan.price.toLocaleString('en-IN')}</div>
                   <div className="text-sm text-muted-foreground">per night</div>
                 </div>
               </div>

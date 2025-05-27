@@ -20,8 +20,8 @@ export function BudgetProgressBar({ current, total, label }: BudgetProgressBarPr
       )}
       <Progress value={percentage} className="h-2" />
       <div className="flex justify-between text-xs text-muted-foreground">
-        <span>${current.toLocaleString()}</span>
-        <span>${total.toLocaleString()}</span>
+        <span>₹{current.toLocaleString('en-IN')}</span>
+        <span>₹{total.toLocaleString('en-IN')}</span>
       </div>
     </div>
   );
