@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -32,9 +31,10 @@ const formSchema = z.object({
 interface GenerateReportDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onReportGenerated: (reportData: any) => void;
 }
 
-export default function GenerateReportDialog({ open, onOpenChange }: GenerateReportDialogProps) {
+export default function GenerateReportDialog({ open, onOpenChange, onReportGenerated }: GenerateReportDialogProps) {
   const { toast } = useToast();
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -66,6 +66,17 @@ export default function GenerateReportDialog({ open, onOpenChange }: GenerateRep
               title: "Report generated",
               description: `Your ${values.reportType} report has been generated successfully.`,
             });
+            
+            // Pass the report data to parent for viewing
+            onReportGenerated({
+              type: values.reportType,
+              startDate: values.startDate,
+              endDate: values.endDate,
+              format: values.format,
+              includeCharts: values.includeCharts,
+              includeBreakdown: values.includeBreakdown,
+            });
+            
             form.reset();
             onOpenChange(false);
           }, 500);

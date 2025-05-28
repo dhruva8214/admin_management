@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,6 +18,7 @@ import RevenueChart from "@/components/dashboard/RevenueChart";
 import NewInvoiceDialog from "@/components/finance/NewInvoiceDialog";
 import RecordExpenseDialog from "@/components/finance/RecordExpenseDialog";
 import GenerateReportDialog from "@/components/finance/GenerateReportDialog";
+import { ReportViewer } from "@/components/finance/ReportViewer";
 
 // Sample financial data (converted to INR)
 const expenses = [
@@ -44,6 +44,8 @@ export default function Finance() {
   const [newInvoiceOpen, setNewInvoiceOpen] = useState(false);
   const [recordExpenseOpen, setRecordExpenseOpen] = useState(false);
   const [generateReportOpen, setGenerateReportOpen] = useState(false);
+  const [reportViewerOpen, setReportViewerOpen] = useState(false);
+  const [currentReportData, setCurrentReportData] = useState(null);
   
   // State for data
   const [invoicesList, setInvoicesList] = useState(invoices);
@@ -57,6 +59,12 @@ export default function Finance() {
   // Handle new expense
   const handleNewExpenseSuccess = (newExpense: any) => {
     setExpensesList(prev => [newExpense, ...prev]);
+  };
+
+  // Handle report generation
+  const handleReportGenerated = (reportData: any) => {
+    setCurrentReportData(reportData);
+    setReportViewerOpen(true);
   };
 
   return (
@@ -119,6 +127,7 @@ export default function Finance() {
 
         {/* Financial Management Tabs */}
         <Tabs defaultValue="overview" className="w-full" value={activeTab} onValueChange={setActiveTab}>
+          {/* Financial Management Tabs */}
           <TabsList className="grid grid-cols-4 mb-6 bg-muted/50">
             <TabsTrigger value="overview" className="flex items-center gap-2">
               <BarChart2 className="h-4 w-4" />
@@ -138,6 +147,7 @@ export default function Finance() {
             </TabsTrigger>
           </TabsList>
 
+          {/* Financial Overview */}
           <TabsContent value="overview" className="space-y-6">
             <Card>
               <CardHeader>
@@ -150,6 +160,7 @@ export default function Finance() {
             </Card>
           </TabsContent>
 
+          {/* Invoices Tab */}
           <TabsContent value="invoices">
             <Card>
               <CardHeader>
@@ -174,7 +185,6 @@ export default function Finance() {
                         <th className="text-left py-3 px-4">Amount</th>
                         <th className="text-left py-3 px-4">Date</th>
                         <th className="text-left py-3 px-4">Status</th>
-                        <th className="text-right py-3 px-4">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -195,9 +205,6 @@ export default function Finance() {
                               {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
                             </span>
                           </td>
-                          <td className="py-3 px-4 text-right">
-                            <Button variant="outline" size="sm">View</Button>
-                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -210,6 +217,7 @@ export default function Finance() {
             </Card>
           </TabsContent>
 
+          {/* Expenses Tab */}
           <TabsContent value="expenses">
             <Card>
               <CardHeader>
@@ -232,7 +240,6 @@ export default function Finance() {
                         <th className="text-left py-3 px-4">Category</th>
                         <th className="text-left py-3 px-4">Amount</th>
                         <th className="text-left py-3 px-4">Date</th>
-                        <th className="text-right py-3 px-4">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -241,9 +248,6 @@ export default function Finance() {
                           <td className="py-3 px-4 font-medium">{expense.category}</td>
                           <td className="py-3 px-4">₹{expense.amount.toLocaleString('en-IN')}</td>
                           <td className="py-3 px-4">{expense.date}</td>
-                          <td className="py-3 px-4 text-right">
-                            <Button variant="outline" size="sm">View</Button>
-                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -256,6 +260,7 @@ export default function Finance() {
             </Card>
           </TabsContent>
 
+          {/* Reports Tab */}
           <TabsContent value="reports">
             <Card>
               <CardHeader>
@@ -328,6 +333,13 @@ export default function Finance() {
       <GenerateReportDialog 
         open={generateReportOpen} 
         onOpenChange={setGenerateReportOpen} 
+        onReportGenerated={handleReportGenerated}
+      />
+
+      <ReportViewer 
+        open={reportViewerOpen} 
+        onOpenChange={setReportViewerOpen} 
+        reportData={currentReportData}
       />
     </MainLayout>
   );

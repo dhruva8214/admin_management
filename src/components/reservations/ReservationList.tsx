@@ -66,30 +66,55 @@ export function ReservationList({
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead>Guest</TableHead>
-              <TableHead>Room Type</TableHead>
-              <TableHead>Stay Period</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+            <TableRow className="bg-muted/50">
+              <TableHead className="font-semibold">Reservation ID</TableHead>
+              <TableHead className="font-semibold">Guest Details</TableHead>
+              <TableHead className="font-semibold">Contact</TableHead>
+              <TableHead className="font-semibold">Room & Guests</TableHead>
+              <TableHead className="font-semibold">Stay Period</TableHead>
+              <TableHead className="font-semibold">Status</TableHead>
+              <TableHead className="text-right font-semibold">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {reservations.map((reservation) => (
-              <TableRow key={reservation.id}>
+              <TableRow key={reservation.id} className="hover:bg-muted/20">
                 <TableCell>
-                  <div>
-                    <div className="font-medium">{reservation.guestName}</div>
-                    <div className="text-sm text-muted-foreground">{reservation.email}</div>
+                  <div className="font-mono text-sm font-medium">
+                    #{reservation.id.slice(-6)}
                   </div>
                 </TableCell>
                 <TableCell>
-                  <div>{reservation.roomType}</div>
-                  <div className="text-sm text-muted-foreground">{reservation.guests} Guest(s)</div>
+                  <div>
+                    <div className="font-medium text-base">{reservation.guestName}</div>
+                  </div>
                 </TableCell>
                 <TableCell>
-                  <div>{format(new Date(reservation.checkIn), "MMM d, yyyy")}</div>
-                  <div className="text-sm text-muted-foreground">to {format(new Date(reservation.checkOut), "MMM d, yyyy")}</div>
+                  <div className="space-y-1">
+                    <div className="text-sm">{reservation.email}</div>
+                    <div className="text-sm text-muted-foreground">{reservation.phone}</div>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="space-y-1">
+                    <div className="font-medium">{reservation.roomType}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {reservation.guests} {reservation.guests === 1 ? 'Guest' : 'Guests'}
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="space-y-1">
+                    <div className="font-medium">
+                      {format(new Date(reservation.checkIn), "MMM dd, yyyy")}
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      to {format(new Date(reservation.checkOut), "MMM dd, yyyy")}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      {Math.ceil((new Date(reservation.checkOut).getTime() - new Date(reservation.checkIn).getTime()) / (1000 * 3600 * 24))} nights
+                    </div>
+                  </div>
                 </TableCell>
                 <TableCell>
                   {getStatusBadge(reservation.status)}
@@ -98,9 +123,10 @@ export function ReservationList({
                   <div className="flex justify-end gap-2">
                     {reservation.status === "confirmed" && (
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
                         onClick={() => onCheckIn(reservation.id)}
+                        className="text-blue-600 border-blue-200 hover:bg-blue-50"
                       >
                         <CalendarClock className="h-4 w-4 mr-1" />
                         Check In
@@ -108,9 +134,10 @@ export function ReservationList({
                     )}
                     {reservation.status === "checked-in" && (
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
                         onClick={() => onCheckOut(reservation.id)}
+                        className="text-green-600 border-green-200 hover:bg-green-50"
                       >
                         <UserCheck className="h-4 w-4 mr-1" />
                         Check Out
@@ -118,9 +145,10 @@ export function ReservationList({
                     )}
                     {(reservation.status === "confirmed" || reservation.status === "checked-in") && (
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
                         onClick={() => onCancelReservation(reservation.id)}
+                        className="text-red-600 border-red-200 hover:bg-red-50"
                       >
                         <X className="h-4 w-4 mr-1" />
                         Cancel
