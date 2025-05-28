@@ -66,12 +66,12 @@ export default function Finance() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-lg font-medium text-blue-800">Total Revenue</CardTitle>
-              <DollarSign className="h-5 w-5 text-blue-600" />
+              <CardTitle className="text-sm font-medium text-blue-800">Total Revenue</CardTitle>
+              <DollarSign className="h-4 w-4 text-blue-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-blue-900">₹1,23,04,750</div>
-              <p className="text-sm text-green-600 mt-2 flex items-center">
+              <div className="text-xl font-bold text-blue-900 mb-1">₹1,23,04,750</div>
+              <p className="text-xs text-green-600 flex items-center">
                 <span className="inline-block mr-1">↑</span> 12% from last month
               </p>
             </CardContent>
@@ -79,12 +79,12 @@ export default function Finance() {
 
           <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-lg font-medium text-green-800">Expenses</CardTitle>
-              <CreditCard className="h-5 w-5 text-green-600" />
+              <CardTitle className="text-sm font-medium text-green-800">Expenses</CardTitle>
+              <CreditCard className="h-4 w-4 text-green-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-green-900">₹35,00,940</div>
-              <p className="text-sm text-red-600 mt-2 flex items-center">
+              <div className="text-xl font-bold text-green-900 mb-1">₹35,00,940</div>
+              <p className="text-xs text-red-600 flex items-center">
                 <span className="inline-block mr-1">↑</span> 8% from last month
               </p>
             </CardContent>
@@ -92,12 +92,12 @@ export default function Finance() {
 
           <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-lg font-medium text-purple-800">Profit Margin</CardTitle>
-              <CirclePercent className="h-5 w-5 text-purple-600" />
+              <CardTitle className="text-sm font-medium text-purple-800">Profit Margin</CardTitle>
+              <CirclePercent className="h-4 w-4 text-purple-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-purple-900">32.4%</div>
-              <p className="text-sm text-green-600 mt-2 flex items-center">
+              <div className="text-xl font-bold text-purple-900 mb-1">32.4%</div>
+              <p className="text-xs text-green-600 flex items-center">
                 <span className="inline-block mr-1">↑</span> 3% from last month
               </p>
             </CardContent>
@@ -105,12 +105,12 @@ export default function Finance() {
 
           <Card className="bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-lg font-medium text-amber-800">Outstanding</CardTitle>
-              <CircleDollarSign className="h-5 w-5 text-amber-600" />
+              <CardTitle className="text-sm font-medium text-amber-800">Outstanding</CardTitle>
+              <CircleDollarSign className="h-4 w-4 text-amber-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-amber-900">₹12,10,140</div>
-              <p className="text-sm text-red-600 mt-2 flex items-center">
+              <div className="text-xl font-bold text-amber-900 mb-1">₹12,10,140</div>
+              <p className="text-xs text-red-600 flex items-center">
                 <span className="inline-block mr-1">↓</span> 5% from last month
               </p>
             </CardContent>
